@@ -1,0 +1,333 @@
+// GUID Generation & Page View Logging Script for IAC PC (1.2)
+/*
+ * Guid Profiler
+ */
+if (typeof guidProfiler === 'undefined') {
+	var guidProfiler = {
+		__pdsUrl: ((location.protocol.toLowerCase() == 'https:')? 'https://pdsssl.auction.co.kr' : 'http://pds.auction.co.kr'),		// prod
+		
+		SETGUIDS_URL: '/cookiemanager/setguids/1/P1',
+		SETLOGIN_URL: '/cookiemanager/setlogin/1',
+		
+		SSGuid_EXPIRE_TIME: 1800000,	// 30min in millisec		
+		SSGuid_TEN_MIN: 600000,			// 10min in millisec				
+		PERSISTENT_COOKIE_EXPIRE_TIME: 31536000000,
+		SSGuid_COOKIE_NAME: 'ssguid',		
+		SSGuid_FIX_GUID_LENGTH: 23,
+		SSGuid_FIX_DIFF_LENGTH: 3,
+
+		isSSGuidReset: false,
+
+		setGUID: function () {
+			var self = guidProfiler;
+
+			var ssguid = self._getCookie(self.SSGuid_COOKIE_NAME);
+			var ssguid_new = ssguid; 
+
+			var sguid = self._getCookie("sguid");
+			var pguid = self._getCookie("pguid");
+			var cguid = self._getCookie("cguid");			
+
+			ssguid_new = self._upsertCheckSSGuid(ssguid);
+			if (self.isSSGuidReset == true ) {
+				self._removeCookie(self.SSGuid_COOKIE_NAME);
+				self._send(self.__pdsUrl + self.SETGUIDS_URL);
+			}
+			else {
+				if (self._getCookie(self.SSGuid_COOKIE_NAME ).length < 1 || self._getCookie("sguid").length < 1 || self._getCookie("pguid").length < 1 || self._getCookie("cguid").length < 1) {
+					self._send(self.__pdsUrl + self.SETGUIDS_URL);
+				}
+				if (ssguid_new !=  '' && ssguid_new != ssguid) {
+					var expireTime = new Date(new Date().getTime() + self.PERSISTENT_COOKIE_EXPIRE_TIME);
+					self._setGlobalCookie(self.SSGuid_COOKIE_NAME, ssguid_new, expireTime, "/", ".auction.co.kr");
+				}
+			}			
+			if (self._getCookie("pds") == '1') {
+				self._setGlobalCookie("pds", "2", null, "/", ".auction.co.kr");
+				self._send(self.__pdsUrl + self.SETLOGIN_URL);
+			}
+		},
+		
+		_upsertCheckSSGuid: function (currentSSGuid) {
+			var self = guidProfiler;
+			
+			if (currentSSGuid == null || currentSSGuid == '') {
+				self.isSSGuidReset = true;
+				return '';
+			}
+			else {
+				var now = new Date();
+				var nowTime = now.getTime();
+				
+				var SSGuidTimeDiff = currentSSGuid.substr(self.SSGuid_FIX_GUID_LENGTH, self.SSGuid_FIX_DIFF_LENGTH );
+				var SSGuidSeqNo= currentSSGuid.substr(self.SSGuid_FIX_GUID_LENGTH+self.SSGuid_FIX_DIFF_LENGTH );
+				var firstAccTime = currentSSGuid.substr(1, 13) * 1; 
+
+				if (!isNaN(firstAccTime ) && !isNaN(SSGuidTimeDiff) && !isNaN(SSGuidSeqNo) ) {
+						
+					var LastAccTime = firstAccTime  + SSGuidTimeDiff * self.SSGuid_TEN_MIN;
+					if (nowTime - LastAccTime < self.SSGuid_EXPIRE_TIME) {
+						SSGuidSeqNo = SSGuidSeqNo * (1) + 1;										
+						SSGuidTimeDiff = "00" + Math.floor(((nowTime - firstAccTime) /   self.SSGuid_TEN_MIN)).toString(); 
+						SSGuidTimeDiff = SSGuidTimeDiff.substr( SSGuidTimeDiff.length - self.SSGuid_FIX_DIFF_LENGTH);
+						
+						self.isSSGuidReset = false;
+						return currentSSGuid.substr(0,self.SSGuid_FIX_GUID_LENGTH)+SSGuidTimeDiff  +SSGuidSeqNo.toString();
+					}					
+				}
+				self.isSSGuidReset = true;
+				return '';
+			}			
+		},
+		_getCookie: function (name) {
+			var cookieName = name + '=';
+			var docCookie = document.cookie;
+			var start = docCookie.indexOf(cookieName);
+			var retCookie = '';
+			
+			if (start > 0 && docCookie[start - 1] != ' ' && docCookie[start - 1] != ';') {
+				start = docCookie.indexOf(cookieName, start + 1);			
+			}			
+			if (start != -1) {
+				start += cookieName.length;
+				var end = docCookie.indexOf(';', start);
+				if (end == -1) end = docCookie.length;
+				retCookie = docCookie.substring(start, end);
+			}
+			return retCookie;
+		},
+		_removeCookie: function(cookieName) {
+			var expireDate = new Date();
+			expireDate.setDate(expireDate.getDate() - 1);		// 어제 날짜를 쿠키 소멸 날짜로 설정한다.
+			document.cookie = cookieName + "=; expires=" + expireDate.toGMTString() + "; path=/;domain=auction.co.kr;";
+		},	  
+		_setGlobalCookie: function (name, value, expires, path, domain, secure) {
+			var curCookie = name + "=" + escape(value) + ((expires) ? "; expires=" + expires.toGMTString() : "") + ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + ((secure) ? "; secure" : "");
+			if ((name + "=" + escape(value)).length <= 4000) {
+				document.cookie = curCookie;
+			}
+		},
+		_send: function (url) {
+			var imgTag = document.createElement('img');
+			imgTag.src = url;
+		}
+	};
+	setTimeout(guidProfiler.setGUID, 25);
+}
+
+/*
+ * Page View & User Behavior Profiler
+ */
+// User Behavior Profiler from ubprofiler_iac.js (ubprofiler_iac.js will be deprecated)
+if (typeof ubprofiler === 'undefined') {
+	var ubprofiler = {
+		__utsUrl: ((location.protocol.toLowerCase() == 'https:')? 'https://utsssl.auction.co.kr' : 'http://uts.auction.co.kr'),		// prod
+
+		send: function (behavior, src, ids, data, method) {
+			var self = ubprofiler;
+			method = method || "GET"; // get or post
+
+			var idStr = (typeof ids === 'object' && typeof ids.join === 'function')? ids.join(',') : ids;
+			var url = self.__utsUrl 
+				+ '/ub/add/1/' + self._encodeUri(behavior) 
+				+ '/' + self._encodeUri(src) 
+				+ '/' + self._encodeUri(idStr);
+
+			if (method == "GET") {
+				var querystring = self._param(data);
+				url += (querystring ? '?' + querystring : '');
+				self._send(url);
+			} else {
+				var body = self._param(data);
+				self._sendPost(url, body);
+			}
+		},
+		sendDirect: function (path, data, method) {
+			var self = ubprofiler;
+			method = method || "GET"; // get or post
+
+			var url = self.__utsUrl + path;
+
+			if (method == "GET") {
+				var querystring = self._param(data);
+				url += (querystring ? (path.indexOf('?') === -1 ? '?' : '&') + querystring : '');
+				self._send(url);
+			} else {
+				var body = self._param(data);
+				self._sendPost(url, body);
+			}
+		},
+		_send: function (url) {
+			var imgTag = document.createElement('img');		// new Image(1, 1);
+			imgTag.src = url;
+		},
+		_sendPost: function (url, body) {
+			try {
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", url, true);
+				xhr.withCredentials = true;
+				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+				xhr.send(body);
+			}
+			catch (e) {
+				var iframe = document.createElement('iframe');
+				iframe.style.display = 'none';
+				iframe.onload = function () {
+					var iframeDoc = this.contentWindow.document;
+
+					// make a invisible form
+					var form = iframeDoc.createElement('form');
+					form.method = 'POST';
+					form.action = url;
+					iframeDoc.body.appendChild(form);
+
+					// pass the parameters
+					for (var name in body) {
+						var input = iframeDoc.createElement('input');
+						input.type = 'hidden';
+						input.name = name;
+						input.value = body[name];
+						form.appendChild(input);
+					}
+
+					form.submit();
+				};
+				document.body.appendChild(iframe);
+			}
+		},
+		_param: function (obj) {
+			var self = ubprofiler;
+
+			var ret = '';
+			var tList = [];
+			if (typeof obj === 'object') {
+				for (var e in obj) {
+					tList.push(e + '=' + self._encodeUri(obj[e]));
+				}
+				ret = tList.join('&');
+			}
+			return ret;
+		},
+		_encodeUri: function (value) {
+			// There are six possible values that typeof returns: "number," "string," "boolean," "object," "function," and "undefined."
+			if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+				return encodeURIComponent(
+					value.toString()
+						.replace(/ /g, ';WS')
+						.replace(/\+/g, ';PL')
+						.replace(/\?/g, ';QU')
+						.replace(/\//g, ';SL')
+						.replace(/\#/g, ';SP')
+						.replace(/\&/g, ';AD')
+				);
+			}
+			return '';
+		}
+	};
+}
+
+if (typeof pvprofiler === 'undefined' && typeof ubprofiler !== 'undefined') {
+	var pvprofiler = {							// page view profiler 
+		// alias
+		_windowAlias: window,
+		_ubprofilerAlias: ubprofiler,
+		_version: '1.2',				// script version
+
+		send: function () {
+			var self = pvprofiler;
+			var pvalue;
+			try {
+				pvalue = document.querySelector("meta[name='uts-pvalue']").getAttribute("content");
+			}
+			catch (e) {
+				pvalue = null;
+			}
+			self._ubprofilerAlias.send(			// page view logging
+				'view',
+				'page',
+				self._version,					// script version
+				{
+					'url': self._windowAlias.document.location.href,
+					'ref': self._windowAlias.document.referrer,
+					'lang': self._windowAlias.navigator.language || self._windowAlias.navigator.userLanguage || self._windowAlias.navigator.browserLanguage,
+					'hlen': self._windowAlias.history.length,
+					'sw': self._windowAlias.screen.width * (self._windowAlias.devicePixelRatio || 1),
+					'sh': self._windowAlias.screen.height * (self._windowAlias.devicePixelRatio || 1),
+					'pvalue': ((typeof pvalue === 'object') ? JSON.stringify(pvalue) : pvalue) || ''
+				}
+			);
+		},
+		isValidAreaCode : function(areaCode) {
+			if(areaCode) var checkAreaCode = areaCode.toString();
+			else return false;
+
+			if(checkAreaCode.length == 9 && checkAreaCode.substring(0,1) == "1") return true;
+			else {
+				if(checkAreaCode == "bin" || checkAreaCode == "atc" || checkAreaCode == "op") return true;
+				else return false;
+			}
+		},
+		/* send page event 
+ 		 * @param string action required
+ 		 * @param string code required
+ 		 * @param string type optional
+ 		 * @param object/string value optional
+ 		 */
+		 sendEvt: function (action, code, type, value) {
+			 var self = pvprofiler;
+ 
+			 if (action && self.isValidAreaCode(code)) {
+				 var pvalue;
+				 try {
+					 pvalue = document.querySelector("meta[name='uts-pvalue']").getAttribute("content");
+				 }
+				 catch (e) {
+					 pvalue = null;
+				 }
+				 self._ubprofilerAlias.send(
+					 'event',         // behavior
+					 'page',        // src
+					 self._version,
+					 {
+						 'url': document.location.href,		// url, required
+						 'ref': document.referrer,       	// referrer url, optional
+						 'act': action,
+						 'acode': code,
+						 'atype': type || '',
+						 'avalue': ((typeof value === 'object') ? JSON.stringify(value) : value) || '',
+						 'pvalue': ((typeof pvalue === 'object') ? JSON.stringify(pvalue) : pvalue) || ''
+					 }
+				 );
+			 }
+		 },
+		sendEvtPost: function (action, code, type, value) {
+			var self = pvprofiler;
+
+			if (action && code) {
+				var pvalue;
+				try {
+					pvalue = document.querySelector("meta[name='uts-pvalue']").getAttribute("content");
+				}
+				catch (e) {
+					pvalue = null;
+				}
+				self._ubprofilerAlias.send(
+					'event',         // behavior
+					'page',        // src
+					self._version,
+					{
+						'url': document.location.href,		// url, required
+						'ref': document.referrer,       	// referrer url, optional
+						'act': action,
+						'acode': code,
+						'atype': type || '',
+						'avalue': ((typeof value === 'object') ? JSON.stringify(value) : value) || '',
+						'pvalue': ((typeof pvalue === 'object') ? JSON.stringify(pvalue) : pvalue) || ''
+					},
+					'POST'
+				);
+			}
+		}
+	};
+	setTimeout(pvprofiler.send, 25);
+}

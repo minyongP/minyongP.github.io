@@ -1,0 +1,175 @@
+@charset "utf-8";
+
+div.suggest-wrap{overflow:hidden;width:100%;border:1px solid #000}
+/* 탭 */
+div.suggest-head{overflow:hidden}
+div.suggest-head ul.tabs{overflow:hidden;background:#000}
+div.suggest-head ul.tabs li{display:inline-block;float:left}
+div.suggest-head ul.tabs li a{display:inline-block;width:178px;height:22px;padding-top:8px;background:#000;color:#fff;text-align:center}
+div.suggest-head ul.tabs li a.on{background:#fff;color:#000}
+div.suggest-head ul.tabs li a.on span{padding-right:14px;background:url(//pics.auction.co.kr/common/2012/bg_arrow_d.gif) right 4px no-repeat;*background-position:right 2px}
+div.suggest-head ul.tabs li a:hover,div.suggest-head ul.tabs li a:hover span{text-decoration:none}
+div.suggest-body{float:left;position:relative;width:100%;background-color:#fff;background:url(//pics.auction.co.kr/common/2012/bg_line.gif) repeat-y right 0}
+div.suggest-kwd{float:left;width:356px;min-height:370px;margin-top:8px}
+div.suggest-kwd-wide{width:373px}
+div.suggest-kwd > ul{padding-bottom:10px;font-size:0;line-height:0}
+div.suggest-kwd ul.planning-list{border-top:1px solid #e6e6e6}
+div.suggest-kwd ul li{margin:0;*zoom:1}
+div.suggest-kwd ul li a{display:block;height:15px;padding:4px 14px 0;*padding:2px 14px;font-size:12px;line-height:15px}
+div.suggest-kwd ul.planning-list{padding-top:9px;border-top:1px solid #e6e6e6}
+div.suggest-kwd ul.planning-list li{margin-top:2px}
+div.suggest-kwd ul.planning-list li a{padding:2px 14px}
+div.suggest-kwd ul li a img{vertical-align:-3px}
+div.suggest-kwd ul li a:hover{background-color:#EFEFEF;text-decoration:none}
+div.suggest-kwd ul li a .kwd-txt{position:relative;color:#333}
+div.suggest-kwd ul li a .kwd-txt img{position:absolute;top:-1px;*top:3px;right:-7px}
+div.suggest-kwd ul li a span{color:#fe434c;text-decoration:none}
+div.suggest-kwd ul li a span.num{float:right;width:30%;font-size:11px;color:#8B8B8B;text-align:right;text-decoration:none}
+div.suggest-kwd ul li a span.num strong{text-decoration:none}
+div.suggest-kwd ul li a .more{background:url(//pics.auction.co.kr/common/2012/bg_arrow_r.gif) no-repeat right 3px}
+div.suggest-kwd ul li.none-txt{margin:0 auto;padding:103px 0 0;font-size:12px;line-height:15px;text-align:center}
+/* sub-menu */
+div.suggest-body ul.sub-menu{margin-left:1px;margin-bottom:4px;list-style:none;*zoom:1}
+div.suggest-body ul.sub-menu li{height:16px;margin-top:3px;margin-left:16px;padding-left:9px;background:url(//pics.auction.co.kr/common/2012/bg_corner.gif) no-repeat 0 2px;line-height:15px;font-size:12px}
+div.suggest-body ul.sub-menu li a{display:inline-block;margin:0;padding:0;color:#999}
+div.suggest-body ul.sub-menu li a:hover{background-color:#fff;text-decoration:underline}
+div.suggest-body ul.sub-menu li span{display:inline-block;overflow:hidden;position:relative;left:0;width:265px;background-color:transparent}
+div.suggest-body ul.sub-menu li strong{font-weight:normal;color:#333}
+/* 확장형 */
+div.suggest-expand div.suggest-body{background-position:355px 0}
+div.suggest-expand div.suggest-kwd{width:355px}
+/* 기본 */
+div.suggest-expand .expand-module{float:right;position:relative;width:244px;padding-top:11px;padding-left:15px;padding-right:15px;background-color:#fff}
+.expand-module .mod-title{margin-bottom:20px}
+.expand-module .mod-body{overflow:hidden}
+.expand-module .mod-body ul li{overflow:hidden;margin-bottom:20px}
+.expand-module .btn-more{position:absolute;top:12px;right:15px}
+/* adicon */
+.title_area{*overflow:hidden;padding:0}
+.title_area:after{display:block;content:'';clear:both}
+.title_area .title{float:left;padding:0 0 8px 16px}
+.title_area .suggest.ad_mark_wrap{float:left;position:relative;top:2px;left:7px;right:0;z-index:1;width:45px}
+.title_area .suggest.ad_mark_wrap .ad_btn{margin-top:-3px;cursor:pointer;vertical-align:middle}
+.title_area .suggest .ad_layer{display:none;position:absolute;top:22px;left:-55px;right:inherit;z-index:2;width:162px;height:auto;padding:14px 33px 14px 14px;border:1px solid #bababa;background:#faf8dd;line-height:15px;vertical-align:top}
+.title_area .ad_layer .cont{font-family:Dotum,'돋움';font-size:11px;letter-spacing:-1px}
+.title_area .ad_layer .cont strong{display:block;padding-bottom:3px}
+.title_area .ad_layer .icon_arrow{display:inline-block;position:absolute;top:-6px;left:71px;width:11px;height:6px;background:url(//pics.auction.co.kr/renewal/lp/icon_arrow13.gif) 0 0 no-repeat;text-indent:-9999px}
+.title_area .ad_layer span.ad_layer_close{display:inline-block;position:absolute;top:13px;left:initial;right:13px;width:10px;height:10px;background:url(//pics.auction.co.kr/renewal/lp/btn_close.gif) 0 0 no-repeat;text-indent:-9999px;cursor:pointer}
+/* 브랜드,스마트쇼핑 */
+.mod-body .product{font-size:0;line-height:0}
+.product .thumbnail{float:left;width:82px;*margin-top:1px;color:#333}
+.product .thumbnail img{border:1px solid #e6e6e6}
+.product .content{float:left;width:150px;margin-left:9px}
+.product .content .name{overflow:hidden;height:50px}
+.product .content .name strong{font:bold 12px/1.25 Malgun Gothic,'맑은고딕',Dotum,sans-serif;color:#777}
+.product .content .name span{display:block;overflow:hidden;height:27px;margin-top:2px;font:11px/14px Malgun Gothic,'맑은고딕',Dotum,sans-serif;color:#999;cursor:pointer}
+.product .content .name a:hover{text-decoration:none}
+.product .content .name a:hover span,.product .content .name a:hover strong{text-decoration:underline}
+.product .content .price{margin-top:4px;font:bold 12px/1.25 Tahoma,sans-serif;color:#333}
+.product .content .price del{padding-right:3px;font-weight:normal;color:#A2A2A2}
+a.product:hover .price span,a.product:hover .price strong{text-decoration:none}
+/* 카탈로그 */
+.mod-catalog .thumbnail{display:inline-block;float:left;width:108px;height:108px;margin-right:15px}
+.mod-catalog .thumbnail .imgbg{padding:1px 7px 7px 1px;background:url(//pics.auction.co.kr/common/2012/bg_catalog_img.gif) no-repeat 0 0;line-height:0}
+.mod-catalog .name{display:inline-block;overflow:hidden;float:left;width:121px;margin-top:-1px}
+.mod-catalog .name a{display:inline-block;overflow:hidden;height:29px;font:12px/1.25 Tahoma,sans-serif;color:#777}
+.mod-catalog .row-price{display:inline-block;float:left;width:121px;margin-top:17px;font:12px/16px Malgun Gothic,'맑은고딕',Dotum,sans-serif;color:#3e70ee}
+.mod-catalog .row-price span{font:bold 14px/16px Tahoma,sans-serif;vertical-align:-1px}
+.mod-catalog .row-price a{display:inline-block;margin-top:2px}
+.mod-catalog .model-info{float:left;width:244px;margin-top:15px}
+.mod-catalog .model-info table{width:100%;border-top:1px solid #e6e6e6;table-layout:fixed}
+.mod-catalog .model-info table th,.mod-catalog .model-info table td{padding:6px 0 2px;border-bottom:1px solid #e6e6e6;font:normal 12px/1.25 Tahoma,sans-serif;vertical-align:middle}
+.mod-catalog .model-info table th.model{text-align:left}
+.mod-catalog .model-info table th.model a{font:11px/13px Malgun Gothic,'맑은고딕',Dotum,sans-serif;color:#999}
+.mod-catalog .model-info table td.price{color:#777;text-align:right}
+.mod-catalog .model-info table td.price span{color:#333}
+/* 도서 */
+.mod-book .thumbnail{display:inline-block;float:left;width:102px;height:102px;margin-right:14px}
+.mod-book .thumbnail a{display:inline-block;border:1px solid #e6e6e6}
+.mod-book .thumbnail a img{display:inline-block;width:100px;height:100px}
+.mod-book .title,.mod-book .price,.mod-book .benefit{display:inline-block;float:left;width:128px}
+.mod-book .title a{display:inline-block;overflow:hidden;height:30px;font:12px/14px Malgun Gothic,'맑은고딕',Dotum;color:#777;vertical-align:top}
+.mod-book .price{margin-top:3px;color:#333}
+.mod-book .price del{display:inline-block;width:129px;font:normal 12px/1.25 Malgun Gothic,'맑은고딕',Dotum;color:#A2A2A2}
+.mod-book .price del span{font-family:Tahoma}
+.mod-book .price strong{font:bold 12px/1.25 Malgun Gothic,'맑은고딕',Dotum}
+.mod-book .price strong span{font:bold 14px/16px Tahoma,sans-serif;vertical-align:-1px}
+.mod-book .benefit{margin-top:7px}
+.mod-book .benefit span{display:inline-block;height:15px;font:11px/13px Malgun Gothic,'맑은고딕',Dotum;color:#777}
+.mod-book .benefit span em{color:#333}
+.mod-book .benefit span.cash{margin-bottom:2px}
+.mod-book .benefit .sale em{padding-left:13px;background:url(//pics.auction.co.kr/common/2012/bg_down.gif) no-repeat 3px 1px}
+.mod-book .book-info{display:inline-block;float:left;width:244px;margin-top:20px;padding:7px 0 5px;border-top:1px solid #e7e7e7;font:11px/16px Malgun Gothic,'맑은고딕',Dotum}
+.mod-book .book-info .publishing{color:#777}
+.mod-book .book-info .story{margin-top:4px;padding-bottom:;color:#999}
+/* 아이콘 */
+.l-icon{display:inline-block;overflow:hidden;width:38px;height:13px;background:url(//pics.auction.co.kr/listing/2012/icons_listing02.gif) no-repeat 0 0;vertical-align:middle}
+.l-icon span{display:inline-block;overflow:hidden;width:100%;font:0/0 a;text-indent:100%;white-space:nowrap;filter:alpha(opacity=0)}
+.l-icon-premium{width:13px;height:42px;background-position:0 0}
+.l-icon-focus{width:20px;height:20px;background-position:0 -45px}
+.l-icon-attend{width:22px;background-position:0 -68px}
+.l-icon-up{width:22px;background-position:0 -84px}
+.l-icon-reserve{width:21px;background-position:0 -100px}
+.l-icon-divide{width:21px;background-position:0 -116px}
+.l-icon-auction{width:21px;background-position:0 -132px}
+.l-icon-used{width:21px;background-position:0 -148px}
+.l-icon-refurb{width:21px;background-position:0 -164px}
+.l-icon-display{width:21px;background-position:0 -180px}
+.l-icon-soho{background-position:0 -196px}
+.l-icon-brand{background-position:0 -212px}
+.l-icon-lotte{background-position:0 -228px}
+.l-icon-reward{width:52px;background-position:0 -244px}
+.l-icon-point{background-position:0 -260px}
+.l-icon-benefit1{background-position:0 -278px}
+.l-icon-benefit2{background-position:0 -296px}
+.l-icon-benefit3{background-position:0 -314px}
+.l-icon-benefit4{background-position:0 -332px}
+.l-icon-benefit5{background-position:0 -350px}
+.l-icon-benefit6{background-position:0 -368px}
+.l-icon-deliver1{background-position:0 -386px}
+.l-icon-deliver2{background-position:0 -404px}
+.l-icon-deliver3{background-position:0 -422px}
+.l-icon-deliver4{background-position:0 -440px}
+.l-icon-deliver5{background-position:0 -458px}
+.l-icon-deliver6{background-position:0 -476px}
+.l-icon-deliver7{background-position:0 -494px}
+.l-icon-blank{width:36px;height:9px;background-position:0 -512px}
+.l-icon-preview{width:37px;height:9px;background-position:0 -524px}
+.l-icon-buyer{width:34px;height:9px;background-position:0 -536px}
+.l-icon-feedback{width:34px;height:9px;background-position:0 -548px}
+.l-icon-price1{width:50px;height:9px;background-position:0 -560px}
+.l-icon-price2{width:144px;height:51px;background-position:0 -572px}
+.l-icon-price3{width:41px;height:9px;background-position:0 -626px}
+.l-icon-price4{width:31px;height:9px;background-position:0 -727px}
+.l-icon-price5{width:31px;height:9px;background-position:0 -739px}
+.l-icon-grade1{width:72px;height:18px;background-position:0 -638px}
+.l-icon-grade2{width:82px;height:18px;background-position:0 -659px}
+.l-icon-grade3{width:92px;height:18px;background-position:0 -680px}
+.l-icon-grade1.l-icon-grade2,.l-icon-grade1.l-icon-grade3,.l-icon.l-icon-grade2.l-icon-grade3,.l-icon.l-icon-grade1.l-icon-grade2.l-icon-grade3{width:96px;height:23px}
+.l-icon-grade1.l-icon-grade2{background-position:0 -987px}
+.l-icon-grade1.l-icon-grade3{background-position:0 -1014px}
+.l-icon-grade2.l-icon-grade3{background-position:0 -1041px}
+.l-icon-grade1.l-icon-grade2.l-icon-grade3{background-position:0 -1068px}
+.l-icon-sellerprd{width:108px;height:23px;background-position:0 -701px}
+.l-icon-attend2{background-position:0 -751px}
+.l-icon-deliver8{background-position:0 -769px}
+.l-icon-brand2{background-position:0 -805px}
+.l-icon-up2{background-position:0 -787px}
+.l-icon-point2{background-position:0 -823px}
+.l-icon-benefit7{background-position:0 -841px}
+.l-icon-satisfy{width:31px;height:10px;background-position:0 -859px}
+.l-icon-return{width:21px;background-position:0 -872px}
+.l-icon-inventory{width:21px;background-position:0 -888px}
+.l-icon-attend3{background-position:0 -751px}
+.l-icon-market1{background-position:0 -920px}
+.l-icon-marton1{background-position:0 -936px}
+.l-icon-soho2{background-position:0 -952px}
+.l-icon-discount{width:21px;background-position:0 -1122px}
+.l-icon-others{width:68px;height:11px;background-position:0 -1156px}
+.l-icon-splus{background-position:0 -1172px}
+.l-icon-directdc{background-position:0 -1190px}
+.l-icon-specialcp{width:48px;background-position:0 -1210px}
+/* 도서 가격 노출 */
+.mod-book .row-price{display:inline-block;float:left;width:121px;margin-top:4px;font:12px/16px Malgun Gothic,'맑은고딕',Dotum;color:#3e70ee}
+.mod-book .row-price span{font:bold 14px/16px Tahoma,Malgun Gothic,'맑은고딕',sans-serif;vertical-align:-1px}
+.mod-book .row-price a{display:inline-block;margin-top:2px}
